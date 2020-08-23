@@ -242,10 +242,12 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             return;
         }
         try {
-            byte[] data = (str + '\n').getBytes();
+            // byte[] data = (str + '\n').getBytes();
+            byte[] data = str.getBytes();
             SpannableStringBuilder spn = new SpannableStringBuilder();
-            spn.append("send " + data.length + " bytes\n");
-            spn.append(HexDump.dumpHexString(data)+"\n");
+            spn.append("sent " + data.length + " bytes\n");
+            String reassembled = new String(data);
+            spn.append(reassembled+"\n");
             spn.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorSendText)), 0, spn.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             receiveText.append(spn);
             usbSerialPort.write(data, WRITE_WAIT_MILLIS);
@@ -273,13 +275,21 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
     private void receive(byte[] data) {
         SpannableStringBuilder spn = new SpannableStringBuilder();
-        // spn.append("receive " + data.length + " bytes\n");
-        if(data.length > 0)
-            spn.append("S"+HexDump.dumpHexString(data)+"E");
-//            spn.append(HexDump.dumpHexString(data)+"\n");
-        PyObject py_func = Python.getInstance().getModule("main").callAttr("addTwo", 50, 58);
-        spn.append("\n" + py_func.toString() + "\n");
-        receiveText.append(spn);
+        spn.append("receive " + data.length + " bytes\n");
+        String reassembled = new String(data);
+        try {
+            if (data.length > 0) {
+                spn.append(" so like I got " + reassembled);
+                PyObject py_func = Python.getInstance().getModule("main").callAttr("addTwo", Integer.valueOf(reassembled), 58);
+                spn.append("\n" + py_func.toString() + "\n");
+            }
+        }
+        catch (java.lang.NumberFormatException e) {
+            spn.append("Reception not successful: " + e.getMessage());
+        }
+        finally {
+            receiveText.append(spn);
+        }
     }
 
     void status(String str) {
