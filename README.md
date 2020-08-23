@@ -20,9 +20,28 @@ Also this article explains the pain point we are solving: hackaday.com/2018/10/1
 - C2.1: Android Studio supports USB-OTG-Serial library
 
 # Block Diagram:
+![](https://raw.githubusercontent.com/markwu2001/android_dev_board/master/Block%20Diagram.png)
 
-Day 3 Goals:
+# Daily Milestones (Comment your name/partner on who claims what task):
+
+## Day 1 Goals:
+Install Android Studio
+Install ChaQuoPy
+## Day 2 Goals:
+Build hello world 1+1 application in ChaQuoPy
+Build Application utilizing usb-serial library in Android Studio to send UART commands
+Test Application with Hardware
+Build Hardware Prototype to send GPIO states over UART
+Start Schematic for Hardware
+Integrate ChaQuoPy math with UART input data
+Bonus: Integrate with Google Cloud Platform
+Investegate Android Studio command line tools for IDE backend
+Define UART commands/functions
+Create ChaQuoPy-UART Template
+
+## Day 3 Goals:
 Finalize IDE Backend
 Create IDE GUI/ Fake IDE GUI for demonstration purposes
 Final Testing and Debugging
 Layout and 3D Render Hardware
+
