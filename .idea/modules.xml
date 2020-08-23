@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android_dev_board.iml" filepath="$PROJECT_DIR$/.idea/modules/android_dev_board.iml" group="android_dev_board" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/usbSerialExamples/usbSerialExamples.iml" filepath="$PROJECT_DIR$/.idea/modules/usbSerialExamples/usbSerialExamples.iml" group="android_dev_board/usbSerialExamples" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/usbSerialForAndroid/usbSerialForAndroid.iml" filepath="$PROJECT_DIR$/.idea/modules/usbSerialForAndroid/usbSerialForAndroid.iml" group="android_dev_board/usbSerialForAndroid" />
+    </modules>
+  </component>
+</project>
