@@ -34,7 +34,6 @@ import com.chaquo.python.Python;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
-import com.hoho.android.usbserial.util.HexDump;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
 
 import java.io.IOException;
@@ -62,6 +61,8 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     private UsbSerialPort usbSerialPort;
     private UsbPermission usbPermission = UsbPermission.Unknown;
     private boolean connected = false;
+
+    public PyObject persistent_module;
 
     public TerminalFragment() {
         broadcastReceiver = new BroadcastReceiver() {
@@ -167,6 +168,15 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         });
     }
 
+    public void start_python_query() {
+        persistent_module.callAttr("get_ready", this);
+        for (;;) {
+            PyObject result = persistent_module.callAttr("loop");
+            if (result.toString().equals("gotem"))
+                receiveText.append("\ngotem\n");
+        }
+    }
+
     /*
      * Serial + UI
      */
@@ -236,7 +246,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         usbSerialPort = null;
     }
 
-    private void send(String str) {
+    public void send(String str) {
         if(!connected) {
             Toast.makeText(getActivity(), "not connected", Toast.LENGTH_SHORT).show();
             return;
@@ -256,24 +266,28 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         }
     }
 
-    private void read() {
+    public String read() {
         if(!connected) {
             Toast.makeText(getActivity(), "not connected", Toast.LENGTH_SHORT).show();
-            return;
+            return "";
         }
+        String ans = "";
         try {
             byte[] buffer = new byte[8192];
             int len = usbSerialPort.read(buffer, READ_WAIT_MILLIS);
-            receive(Arrays.copyOf(buffer, len));
+            ans = receive(Arrays.copyOf(buffer, len));
         } catch (IOException e) {
             // when using read with timeout, USB bulkTransfer returns -1 on timeout _and_ errors
             // like connection loss, so there is typically no exception thrown here on error
             status("connection lost: " + e.getMessage());
             disconnect();
         }
+        finally {
+            return ans;
+        }
     }
 
-    private void receive(byte[] data) {
+    private String receive(byte[] data) {
         SpannableStringBuilder spn = new SpannableStringBuilder();
         spn.append("receive " + data.length + " bytes\n");
         String reassembled = new String(data);
@@ -289,6 +303,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         }
         finally {
             receiveText.append(spn);
+            return reassembled;
         }
     }
 

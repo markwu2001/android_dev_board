@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             TerminalFragment terminal = (TerminalFragment)getSupportFragmentManager().findFragmentByTag("terminal");
             if (terminal != null)
                 terminal.status("USB device detected");
+            PyObject pyf = Python.getInstance().getModule("main");
+            terminal.persistent_module = pyf;
+            terminal.start_python_query();
         }
         super.onNewIntent(intent);
     }
