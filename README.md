@@ -6,18 +6,18 @@ Also this article explains the pain point we are solving: hackaday.com/2018/10/1
 # Requirements:
 
 - A1: Allow the end user to interface in a beginner friendly programming language with lots of community support
-- A1.1: End-user language of choice: python
-- A1.2: Python shall be able to interact with USB-OTG drivers
-- A1.2.1: ChaQuoPy can integrate with Android Studio
+- - A1.1: End-user language of choice: python
+- - A1.2: Python shall be able to interact with USB-OTG drivers
+- - - A1.2.1: ChaQuoPy can integrate with Android Studio
 - B1: Create hardware that can interface with common sensors
-- B1.1: Create hardware that can interface with digital I/O sensors and bus I/O sensors (SPI, I2C)
-- B1.2: Hardware shall interface with Android USB-OTG driver
-- B1.1.1: FTDI USB-UART -> UART to uC -> peripherals
-- B1.1.2: Atmega32u4 ->peripherals
+- - B1.1: Create hardware that can interface with digital I/O sensors and bus I/O sensors (SPI, I2C)
+- - B1.2: Hardware shall interface with Android USB-OTG driver
+- - - B1.1.1: FTDI USB-UART -> UART to uC -> peripherals
+- - - B1.1.2: Atmega32u4 ->peripherals
 - C1: Create an user-friendly IDE that abstracts underlying integration
-- C1.1: Android Studio supplies command line tools for IDE to utilize discreetly
+- - C1.1: Android Studio supplies command line tools for IDE to utilize discreetly
 - C2: IDE backend shall support USB-OTG drivers
-- C2.1: Android Studio supports USB-OTG-Serial library
+- - C2.1: Android Studio supports USB-OTG-Serial library
 
 # Block Diagram:
 ![](https://raw.githubusercontent.com/markwu2001/android_dev_board/master/Block%20Diagram.png)
