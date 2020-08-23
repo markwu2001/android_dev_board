@@ -45,3 +45,7 @@ Create IDE GUI/ Fake IDE GUI for demonstration purposes
 Final Testing and Debugging
 Layout and 3D Render Hardware
 
+# Notes:
+Schematic and Layout are in Altium folder in PDF format
+IDE is available as ide.exe in root directory
+
